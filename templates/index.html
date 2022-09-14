@@ -1,0 +1,16 @@
+<title>Etusivu</title>
+<h1>Keskustelusovellus</h1>
+<p>Tervetuloa!</p>
+
+Viestien määrä: {{ count }}
+<hr>
+{% for message in messages %}
+{{ message.content }}
+<hr>
+{% endfor %}
+{% if session.username %}
+<p>Olet kirjautunut sisään.</p>
+<a href="/new">Lähetä viesti</a> | <a href="/logout">Kirjaudu ulos</a>
+{% else %}
+<a href="/login">Kirjaudu sisään</a>
+{% endif %}
