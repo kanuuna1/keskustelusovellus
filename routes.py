@@ -1,4 +1,5 @@
-from crypt import methods
+
+from unittest import result
 from app import app
 from flask import render_template, request, redirect, session
 from db import db
@@ -18,9 +19,12 @@ def new():
 
 @app.route("/send", methods=["GET", "POST"])
 def send():
+    user_id = session.get("user_id", 0)
+    if user_id == 0:
+        return "ei kirjauduttu"
     content = request.form["content"]
-    sql = "INSERT INTO messages (content, sent_at) VALUES (:content, NOW())"
-    db.session.execute(sql, {"content":content})
+    sql = "INSERT INTO messages (content, sent_at, user_id) VALUES (:content, NOW(), :user_id)"
+    db.session.execute(sql, {"content":content, "user_id": user_id})
     db.session.commit() 
     return redirect("/")
 
@@ -32,11 +36,22 @@ def login():
     if request.method == "POST":
         username = request.form["username"]
         password = request.form["password"]
-        session["username"] = username
-        hash_value = generate_password_hash(password)
-        sql = "INSERT INTO users (username, password) VALUES (:username, :password)"
-        db.session.execute(sql, {"username":username, "password":hash_value})
-        db.session.commit()
+        # salasanan ja tunnuksen tarkistus
+        sql = "SELECT id, password FROM users WHERE username=:username"
+        result = db.session.execute(sql, {"username":username})
+        user = result.fetchone()
+        if not user:
+            return "Virheellinen tunnus"
+        else:
+            hash_value = user.password
+            if check_password_hash(hash_value, password):
+                print("oikea salasana")
+                session["username"] = username 
+                session["user_id"] = user.id
+            else:
+                print("väärä salasana")
+        
+        
         return redirect("/")
 
 
@@ -58,8 +73,10 @@ def register():
             return "eri salasanat"
         password = password1
         hash_value = generate_password_hash(password)
-        sql = "INSERT INTO users (username, password) VALUES (:username, :password)"
-        db.session.execute(sql, {"username":username, "password":hash_value})
-        db.session.commit()
-        
-    return "rekisteroity"
+        try:
+            sql = "INSERT INTO users (username, password) VALUES (:username, :password)"
+            db.session.execute(sql, {"username":username, "password":hash_value})
+            db.session.commit()
+        except:
+            return "tunnus jo käytössä"
+    return redirect("/")

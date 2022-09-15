@@ -1,5 +1,3 @@
-import imp
-from multiprocessing.spawn import import_main_path
 from flask import Flask
 from os import getenv
 
