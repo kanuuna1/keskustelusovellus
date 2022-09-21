@@ -2,15 +2,19 @@
 <h1>Keskustelusovellus</h1>
 <p>Tervetuloa!</p>
 
-Viestien määrä: {{ count }}
+Keskustelualueet:
 <hr>
-{% for message in messages %}
-{{ message.content }}
+{% for section in sections %}
+<li><a href="/section">{{ section.topic }}</a>
 <hr>
 {% endfor %}
 {% if session.username %}
 <p>Olet kirjautunut sisään.</p>
-<a href="/new">Lähetä viesti</a> | <a href="/logout">Kirjaudu ulos</a>
+<a href="/logout">Kirjaudu ulos</a>
 {% else %}
 <a href="/login">Kirjaudu sisään</a>
+{% endif %}
+<p>
+{% if session.is_admin %}
+<a href="/new_section">Luo uusi keskustelualue</a>
 {% endif %}

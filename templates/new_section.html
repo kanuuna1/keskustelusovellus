@@ -1,0 +1,9 @@
+{% if session.user_id %}
+<form action="/new_section" method="post">
+    Alueen nimi: <input type="text" name="topic">
+    <p>
+    <input type="submit" value="Luo alue">
+</form>
+{% else %}
+<a href="/login">Kirjaudu sisään</a>
+{% endif %}

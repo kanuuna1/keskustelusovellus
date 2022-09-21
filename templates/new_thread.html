@@ -1,0 +1,11 @@
+{% if session.user_id %}
+Alue: {{ topic}}
+<hr>
+<form action="/new_thread" method="post">
+    Otsikko: <input type="text" name="heading">
+    <p>
+    <input type="submit" value="Luo ketju">
+</form>
+{% else %}
+<a href="/login">Kirjaudu sisään</a>
+{% endif %}
