@@ -5,11 +5,11 @@
 Keskustelualueet:
 <hr>
 {% for section in sections %}
-<li><a href="/section">{{ section.topic }}</a>
+<li><a href="/section/{{ section.id }}">{{ section.topic }}</a>
 <hr>
 {% endfor %}
 {% if session.username %}
-<p>Olet kirjautunut sisään.</p>
+<p>Olet kirjautunut sisään nimellä <b>{{ session.username }}</b></p>
 <a href="/logout">Kirjaudu ulos</a>
 {% else %}
 <a href="/login">Kirjaudu sisään</a>

@@ -1,0 +1,13 @@
+Alueen ketjut:
+<hr>
+{% for thread in threads %}
+<li>{{ thread.heading }}
+<hr>
+{% endfor %}
+{% if session.username %}
+<p>Olet kirjautunut sisään nimellä <b>{{ session.username }}</b></p>
+<a href="/logout">Kirjaudu ulos</a>
+{% else %}
+<a href="/login">Kirjaudu sisään</a>
+{% endif %}
+

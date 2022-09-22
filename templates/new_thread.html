@@ -1,7 +1,7 @@
 {% if session.user_id %}
-Alue: {{ topic}}
+Luo uusi ketju
 <hr>
-<form action="/new_thread" method="post">
+<form action="/new_thread/{{ section_id }}" method="post">
     Otsikko: <input type="text" name="heading">
     <p>
     <input type="submit" value="Luo ketju">
