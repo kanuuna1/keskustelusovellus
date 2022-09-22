@@ -37,7 +37,5 @@ def user_id():
     return session.get("user_id", 0)
 
 def is_admin():
-    #print("admin: ")
-    #print(session.get("is_admin"))
     return session.get("is_admin")
 
