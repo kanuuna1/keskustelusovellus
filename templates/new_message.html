@@ -1,0 +1,12 @@
+{% if session.user_id %}
+Kirjoita viesti
+<hr>
+<form action="/new_message/{{ thread_id }}" method="post">
+    Viesti: <br>
+    <textarea name="content" rows="3" cols="40"></textarea>
+    <br>
+    <input type="submit" value="Lähetä">
+</form>
+{% else %}
+<a href="/login">Kirjaudu sisään</a>
+{% endif %}

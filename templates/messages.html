@@ -1,15 +1,16 @@
-<h1>Alue: {{ topic }}</h1>
+<h1>Ketju: {{ title }}</h1>
 <hr>
-{% for thread in threads %}
-<li><a href="/thread/{{ thread.id }}">{{ thread.heading }}</a>
+{% for message in messages %}
+<li>{{ message.content }}
 <hr>
 {% endfor %}
 {% if session.username %}
 <p>Olet kirjautunut sisään nimellä <b>{{ session.username }}</b></p>
 <hr>
-<a href="/new_thread/{{ section_id }}">Luo uusi ketju</a>
+<a href="/new_message/{{ thread_id }}">Kirjoita uusi viesti</a>
 <hr>
 <a href="/logout">Kirjaudu ulos</a>
 {% else %}
 <a href="/login">Kirjaudu sisään</a>
 {% endif %}
+
