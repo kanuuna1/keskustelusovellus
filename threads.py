@@ -1,4 +1,3 @@
-import imp
 from db import db
 
 def get_all_threads(section_id):
@@ -13,5 +12,12 @@ def new_thread(heading, section_id, user_id):
     db.session.commit()
     return thread_id
 
+def get_heading(thread_id):
+    id = thread_id
+    sql = "SELECT heading FROM threads WHERE id=:id"
+    return db.session.execute(sql, {"id":id}).fetchone()[0]
 
-
+def get_section_id(thread_id):
+    id = thread_id
+    sql = "SELECT section_id FROM threads WHERE id=:id"
+    return db.session.execute(sql, {"id":id}).fetchone()[0]

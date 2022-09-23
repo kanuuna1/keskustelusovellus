@@ -12,11 +12,13 @@ def get_all_sections():
     return result
 
 def count_threads(section_id):
-    sql = "SELECT COUNT(*) FROM threads WHERE section_id=:section_id"
-    return db.session.execute(sql, {"section_id":section_id})
+    id = section_id
+    sql = "SELECT COUNT(*) FROM threads WHERE id=:id"
+    return db.session.execute(sql, {"section_id":id})
 
+#TODO
 def get_topic(section_id):
-    sql = "SELECT topic FROM sections WHERE id=:section_id"
-    result = db.session.execute(sql, {"id":section_id}).fetchone()[0]
-    db.session.commit()
-    return result
+    id = section_id
+    sql = "SELECT topic FROM sections WHERE id=:id"
+    return db.session.execute(sql, {"id":id}).fetchone()[0]
+   

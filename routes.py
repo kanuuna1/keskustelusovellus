@@ -1,11 +1,13 @@
+from concurrent.futures import thread
 from app import app
 from flask import render_template, request, redirect, session
 from db import db
 from werkzeug.security import check_password_hash, generate_password_hash
-import users, sections, threads
+import users, sections, threads, messages
 
 @app.route("/")
 def index():
+    #TODO: näytä ketjujen ja viestin määrä ja viimeisimmän viestin ajankohta
     return render_template("index.html", sections=sections.get_all_sections())
 
 @app.route("/login", methods=["GET", "POST"])
@@ -59,11 +61,9 @@ def new_section():
 
 @app.route("/section/<int:section_id>")
 def show_section(section_id):
-    #TODO: näytä alueen nimi?
-    #topic = sections.get_topic(section_id)
-    return render_template("threads.html", threads=threads.get_all_threads(section_id))
+    return render_template("threads.html", section_id=section_id, topic=sections.get_topic(section_id), threads=threads.get_all_threads(section_id))
 
-@app.route("/new_thread/<section_id>", methods=["GET", "POST"])
+@app.route("/new_thread/<int:section_id>", methods=["GET", "POST"])
 def new_thread(section_id):
     user_id = users.user_id()
     if request.method == "GET":
@@ -71,6 +71,20 @@ def new_thread(section_id):
     heading = request.form["heading"]
     thread_id = threads.new_thread(heading, section_id, user_id)
     return redirect("/")
+
+@app.route("/thread/<int:thread_id>")
+def show_thread(thread_id):
+    #TODO:näytä viestien tiedot?
+    return render_template("messages.html", thread_id=thread_id, title=threads.get_heading(thread_id), messages=messages.get_all_messages(thread_id))
+
+@app.route("/new_message/<int:thread_id>", methods=["GET", "POST"])
+def new_message(thread_id):
+    user_id = users.user_id()
+    if request.method == "GET":
+        return render_template("new_message.html", thread_id=thread_id)
+    content = request.form["content"]
+    message_id = messages.new_message(content, user_id, thread_id)
+    return redirect("/thread/"+str(thread_id))
 
 
 
