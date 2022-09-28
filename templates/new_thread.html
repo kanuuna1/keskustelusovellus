@@ -5,6 +5,7 @@ Luo uusi ketju
     Otsikko: <input type="text" name="heading">
     <p>
     <input type="submit" value="Luo ketju">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 {% else %}
 <a href="/login">Kirjaudu sisään</a>

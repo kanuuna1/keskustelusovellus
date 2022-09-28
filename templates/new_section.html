@@ -3,6 +3,7 @@
     Alueen nimi: <input type="text" name="topic">
     <p>
     <input type="submit" value="Luo alue">
+    <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
 </form>
 {% else %}
 <a href="/login">Kirjaudu sisään</a>

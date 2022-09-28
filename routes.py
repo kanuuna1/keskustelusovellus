@@ -1,4 +1,3 @@
-from concurrent.futures import thread
 from app import app
 from flask import render_template, request, redirect, session
 from db import db
@@ -57,6 +56,7 @@ def new_section():
         return render_template("new_section.html")
     topic = request.form["topic"]
     section_id = sections.new_section(topic)
+    users.check_csrf_token(request)
     return redirect("/")
 
 @app.route("/section/<int:section_id>")
@@ -70,6 +70,7 @@ def new_thread(section_id):
         return render_template("new_thread.html", section_id=section_id)    
     heading = request.form["heading"]
     thread_id = threads.new_thread(heading, section_id, user_id)
+    users.check_csrf_token(request)
     return redirect("/")
 
 @app.route("/thread/<int:thread_id>")
@@ -84,6 +85,7 @@ def new_message(thread_id):
         return render_template("new_message.html", thread_id=thread_id)
     content = request.form["content"]
     message_id = messages.new_message(content, user_id, thread_id)
+    users.check_csrf_token(request)
     return redirect("/thread/"+str(thread_id))
 
 

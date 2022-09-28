@@ -1,4 +1,4 @@
-from atexit import register
+from secrets import token_hex
 from db import db
 from flask import session
 from werkzeug.security import check_password_hash, generate_password_hash
@@ -14,6 +14,7 @@ def login(username, password):
             session["user_id"] = user.id
             session["username"] = username
             session["is_admin"] = user.role
+            session["csrf_token"] = token_hex(16)
             return True
     return False
 
@@ -22,6 +23,7 @@ def logout():
     del session["user_id"]
     del session["username"]
     del session["is_admin"]
+    del session["csrf_token"]
 
 def register(username, password, role):
     hash_value = generate_password_hash(password)
@@ -39,3 +41,6 @@ def user_id():
 def is_admin():
     return session.get("is_admin")
 
+def check_csrf_token(request):
+    if session["csrf_token"] != request.form["csrf_token"]:
+        abort(403)
