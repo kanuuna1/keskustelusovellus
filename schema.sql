@@ -8,6 +8,7 @@ CREATE TABLE users (
 CREATE TABLE sections (
     id SERIAL PRIMARY KEY,
     topic TEXT
+    visible BOOLEAN
 );    
 
 CREATE TABLE threads (
@@ -15,6 +16,7 @@ CREATE TABLE threads (
     heading TEXT UNIQUE,
     section_id INTEGER REFERENCES sections,
     user_id INTEGER REFERENCES users
+    visible BOOLEAN
 );
 
 CREATE TABLE messages (
@@ -23,5 +25,6 @@ CREATE TABLE messages (
     sent_at TIMESTAMP,
     user_id INTEGER REFERENCES users,
     thread_id INTEGER REFERENCES threads
+    visible BOOLEAN
 );
 
