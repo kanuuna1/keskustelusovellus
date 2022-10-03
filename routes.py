@@ -32,6 +32,8 @@ def register():
         return render_template("register.html")
     if request.method == "POST":
         username = request.form["username"]
+        if len(username) < 1 or len(username) > 20:
+            return render_template("error.html", message="Tunnuksessa tulee olla 1-20 merkkiä")
         password1 = request.form["password1"]
         password2 = request.form["password2"]
         role = request.form["user_role"]
@@ -42,7 +44,7 @@ def register():
         if users.register(username, password, role):
             return redirect("/")
         else:
-            return render_template("error.html", message="Tunnus jo käytössä")
+            return render_template("error.html", message="Rekisteröinti ei onnistunut")
     return redirect("/")
 
 
@@ -55,6 +57,8 @@ def new_section():
     if request.method == "GET":
         return render_template("new_section.html")
     topic = request.form["topic"]
+    if len(topic) < 1 or len(topic) > 40:
+            return render_template("error.html", message="Otsikossa tulee olla 1-40 merkkiä")
     section_id = sections.new_section(topic)
     users.check_csrf_token(request)
     return redirect("/")
@@ -69,6 +73,8 @@ def new_thread(section_id):
     if request.method == "GET":
         return render_template("new_thread.html", section_id=section_id)    
     heading = request.form["heading"]
+    if len(heading) < 1 or len(heading) > 40:
+        return render_template("error.html", message="Otsikossa tulee olla 1-40 merkkiä")
     thread_id = threads.new_thread(heading, section_id, user_id)
     users.check_csrf_token(request)
     return redirect("/")
@@ -84,6 +90,8 @@ def new_message(thread_id):
     if request.method == "GET":
         return render_template("new_message.html", thread_id=thread_id)
     content = request.form["content"]
+    if len(content) < 1 or len(content) > 500:
+        return render_template("Viestissä tulee olla 1-400 merkkiä")
     message_id = messages.new_message(content, user_id, thread_id)
     users.check_csrf_token(request)
     return redirect("/thread/"+str(thread_id))

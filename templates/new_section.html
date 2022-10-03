@@ -1,6 +1,6 @@
 {% if session.user_id %}
 <form action="/new_section" method="post">
-    Alueen nimi: <input type="text" name="topic">
+    Alueen nimi: <input type="text" name="topic" minlength="1" maxlength="40">
     <p>
     <input type="submit" value="Luo alue">
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">

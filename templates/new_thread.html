@@ -2,7 +2,7 @@
 Luo uusi ketju
 <hr>
 <form action="/new_thread/{{ section_id }}" method="post">
-    Otsikko: <input type="text" name="heading">
+    Otsikko: <input type="text" name="heading" minlength="1" maxlength="40">
     <p>
     <input type="submit" value="Luo ketju">
     <input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
