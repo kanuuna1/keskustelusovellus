@@ -3,7 +3,8 @@
 {% for message in messages %}
 <li>{{ message.content }}
 {% if message.user_id == session.user_id or session.is_admin %}
-<a href="/remove_message/{{ message.id }}">Poista viesti</a>
+<a href="/remove_message/{{ message.id }}">Poista viesti</a> | 
+<a href="/edit_message/{{ message.id }}">Muokkaa viestiä</a>
 {% endif %}
 <hr>
 {% endfor %}

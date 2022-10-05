@@ -1,0 +1,15 @@
+<h2>Muokkaa viestiä</h2>
+{% if session.user_id == message_user_id or session.is_admin %}
+<form action="/edit_message/{{ message_id }}" method="post">
+Viesti: <br>
+<textarea name="content" rows="3" cols="40">{{ content }}</textarea>
+<br>
+<input type="submit" value="Lähetä">
+<input type="hidden" name="message_id" value="{{ message_id }}">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+</form>
+{% else %}
+<a href="/login">Kirjaudu sisään</a>
+{% endif %}
+<p>
+<a href="/">Palaa etusivulle</a>

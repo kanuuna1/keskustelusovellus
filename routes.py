@@ -1,4 +1,5 @@
 from crypt import methods
+from importlib.resources import read_binary
 from app import app
 from flask import render_template, request, redirect, session
 from db import db
@@ -106,4 +107,14 @@ def remove_message(message_id):
     messages.remove_message(message_id, user_id)
     return redirect("/")
 
+@app.route("/edit_message/<int:message_id>", methods=["GET", "POST"])
+def edit_message(message_id):
+    user_id = users.user_id()
+    if request.method == "GET":
+        return render_template("edit_message.html", message_user_id=messages.get_user_id(message_id), content=messages.get_content(message_id), message_id=message_id)
+    content = request.form["content"]
+    message_id = request.form["message_id"]
+    users.check_csrf_token(request)
+    messages.edit_message(message_id, user_id, content)
+    return redirect("/")
 
