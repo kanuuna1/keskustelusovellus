@@ -67,6 +67,7 @@ def new_section():
 
 @app.route("/section/<int:section_id>")
 def show_section(section_id):
+    #TODO: näytä muokkaus/poistomahdollisuus
     return render_template("threads.html", section_id=section_id, topic=sections.get_topic(section_id), threads=threads.get_all_threads(section_id))
 
 @app.route("/new_thread/<int:section_id>", methods=["GET", "POST"])
@@ -84,8 +85,26 @@ def new_thread(section_id):
 @app.route("/thread/<int:thread_id>")
 def show_thread(thread_id):
     #TODO:näytä viestien tiedot?
-    #TODO: omien viestien kohdalle poisto/muokkaus-mahdollisuus
     return render_template("messages.html", thread_id=thread_id, title=threads.get_heading(thread_id), messages=messages.get_all_messages(thread_id))
+
+@app.route("/edit_thread/<int:thread_id>", methods=["GET", "POST"])
+def edit_thread(thread_id):
+    user_id = users.user_id()
+    if request.method == "GET":
+        return render_template("edit_thread.html", thread_id=thread_id, thread_user_id=threads.get_user_id(thread_id))
+    heading = request.form["heading"]
+    if len(heading) < 1 or len(heading) > 40:
+        return render_template("error.html", message="Otsikossa tulee olla 1-40 merkkiä")
+    users.check_csrf_token(request)
+    threads.edit_thread(thread_id, heading)
+    return redirect("/")
+
+@app.route("/remove_thread/<int:thread_id>", methods=["GET", "POST"])
+def remove_thread(thread_id):
+    user_id = users.user_id()
+    #users.check_csrf_token(request)
+    threads.remove_thread(thread_id, user_id)
+    return redirect("/")
 
 @app.route("/new_message/<int:thread_id>", methods=["GET", "POST"])
 def new_message(thread_id):
@@ -94,7 +113,7 @@ def new_message(thread_id):
         return render_template("new_message.html", thread_id=thread_id)
     content = request.form["content"]
     if len(content) < 1 or len(content) > 500:
-        return render_template("Viestissä tulee olla 1-400 merkkiä")
+        return render_template("Viestissä tulee olla 1-500 merkkiä")
     message_id = messages.new_message(content, user_id, thread_id)
     users.check_csrf_token(request)
     return redirect("/thread/"+str(thread_id))
@@ -113,8 +132,11 @@ def edit_message(message_id):
     if request.method == "GET":
         return render_template("edit_message.html", message_user_id=messages.get_user_id(message_id), content=messages.get_content(message_id), message_id=message_id)
     content = request.form["content"]
+    if len(content) < 1 or len(content) > 500:
+        return render_template("Viestissä tulee olla 1-500 merkkiä")
     message_id = request.form["message_id"]
     users.check_csrf_token(request)
     messages.edit_message(message_id, user_id, content)
     return redirect("/")
+
 
