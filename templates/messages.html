@@ -2,6 +2,9 @@
 <hr>
 {% for message in messages %}
 <li>{{ message.content }}
+{% if message.user_id == session.user_id or session.is_admin %}
+<a href="/remove_message/{{ message.id }}">Poista viesti</a>
+{% endif %}
 <hr>
 {% endfor %}
 {% if session.username %}

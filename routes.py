@@ -1,3 +1,4 @@
+from crypt import methods
 from app import app
 from flask import render_template, request, redirect, session
 from db import db
@@ -82,6 +83,7 @@ def new_thread(section_id):
 @app.route("/thread/<int:thread_id>")
 def show_thread(thread_id):
     #TODO:näytä viestien tiedot?
+    #TODO: omien viestien kohdalle poisto/muokkaus-mahdollisuus
     return render_template("messages.html", thread_id=thread_id, title=threads.get_heading(thread_id), messages=messages.get_all_messages(thread_id))
 
 @app.route("/new_message/<int:thread_id>", methods=["GET", "POST"])
@@ -96,5 +98,12 @@ def new_message(thread_id):
     users.check_csrf_token(request)
     return redirect("/thread/"+str(thread_id))
 
+@app.route("/remove_message/<int:message_id>", methods=["GET", "POST"])
+def remove_message(message_id):
+    user_id = users.user_id()
+    #TODO: csrf-check?
+    #users.check_csrf_token(request)
+    messages.remove_message(message_id, user_id)
+    return redirect("/")
 
 
