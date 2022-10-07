@@ -1,7 +1,7 @@
 from db import db
 
 def get_all_messages(thread_id):
-    sql = "SELECT * FROM messages WHERE thread_id=:thread_id AND visible=TRUE ORDER BY sent_at"
+    sql = "SELECT id, content, sent_at, user_id, thread_id FROM messages WHERE thread_id=:thread_id AND visible ORDER BY sent_at"
     result = db.session.execute(sql, {"thread_id":thread_id}).fetchall()
     db.session.commit()
     return result
@@ -31,3 +31,10 @@ def get_user_id(id):
     sql = "SELECT user_id FROM messages WHERE id=:id"
     result = db.session.execute(sql, {"id":id}).fetchone()[0]
     return result
+
+def search(query):
+    sql = "SELECT * FROM messages WHERE content LIKE LOWER(:query) AND visible"
+    return db.session.execute(sql, {"query":"%"+query+"%"}).fetchall()
+
+
+    

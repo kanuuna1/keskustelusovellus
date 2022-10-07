@@ -1,18 +1,17 @@
 <h1>Alue: {{ topic }}</h1>
 <hr>
 {% for thread in threads %}
-<li><a href="/thread/{{ thread.id }}">{{ thread.heading }}</a>
+<li><a href="/thread/{{ thread.id }}">{{ thread.heading }}</a> |
 {% if thread.user_id == session.user_id or session.is_admin %}
 <a href="/edit_thread/{{ thread.id }}">Muokkaa ketjun otsikkoa</a> |
 <a href="/remove_thread/{{ thread.id }}">Poista ketju</a>
 {% endif %}
-<hr>
 {% endfor %}
-{% if session.username %}
-<p>Olet kirjautunut sisään nimellä <b>{{ session.username }}</b></p>
 <hr>
 <a href="/new_thread/{{ section_id }}">Luo uusi ketju</a>
 <hr>
+{% if session.username %}
+<p>Olet kirjautunut sisään nimellä <b>{{ session.username }}</b></p>
 <a href="/logout">Kirjaudu ulos</a>
 {% else %}
 <a href="/login">Kirjaudu sisään</a>

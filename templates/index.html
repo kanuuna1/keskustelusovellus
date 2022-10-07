@@ -4,10 +4,20 @@
 
 Keskustelualueet:
 <hr>
+
 {% for section in sections %}
-<li><a href="/section/{{ section.id }}">{{ section.topic }}</a>
+<li><a href="/section/{{ section[0] }}">{{ section[1] }}</a>
+<li> Ketjujen määrä: {{ section[2] }}</li>
+<li> Viestien määrä: {{ section[3] }}</li>
+<li> Viimeisin viesti lähetetty: {{ section[4] }}</li>
+
+{% if session.is_admin %}
+<a href="/remove_section/{{ section.id }}">Poista alue</a>
+{% endif %}
+
 <hr>
 {% endfor %}
+
 {% if session.username %}
 <p>Olet kirjautunut sisään nimellä <b>{{ session.username }}</b></p>
 <a href="/logout">Kirjaudu ulos</a>
@@ -15,6 +25,16 @@ Keskustelualueet:
 <a href="/login">Kirjaudu sisään tai luo uusi tunnus</a>
 {% endif %}
 <p>
+
 {% if session.is_admin %}
-<a href="/new_section">Luo uusi keskustelualue</a>
+<a href="/new_section">Luo uusi keskustelualue</a> |
 {% endif %}
+<hr>
+
+Etsi viestejä:
+<form action="/result" method="post">
+<input type="text" name="query" minlength="1" maxlength="20">
+<input type="hidden" name="csrf_token" value="{{ session.csrf_token }}">
+<input type="submit" value="Etsi">
+
+</form>

@@ -1,5 +1,3 @@
-from crypt import methods
-from importlib.resources import read_binary
 from app import app
 from flask import render_template, request, redirect, session
 from db import db
@@ -8,8 +6,8 @@ import users, sections, threads, messages
 
 @app.route("/")
 def index():
-    #TODO: näytä ketjujen ja viestin määrä ja viimeisimmän viestin ajankohta
-    return render_template("index.html", sections=sections.get_all_sections())
+    #TODO: käsittele nullit ja nollat, muotoile PVM
+    return render_template("index.html", sections=sections.get_sections())
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -65,9 +63,18 @@ def new_section():
     users.check_csrf_token(request)
     return redirect("/")
 
+@app.route("/remove_section/<int:section_id>")
+def remove_section(section_id):
+    user_id = users.user_id()
+    if users.is_admin() == 0:
+        #TODO
+        return render_template("error.html", message="Ei käyttöoikeutta")
+    sections.remove_section(section_id)
+    return redirect("/")
+
+
 @app.route("/section/<int:section_id>")
 def show_section(section_id):
-    #TODO: näytä muokkaus/poistomahdollisuus
     return render_template("threads.html", section_id=section_id, topic=sections.get_topic(section_id), threads=threads.get_all_threads(section_id))
 
 @app.route("/new_thread/<int:section_id>", methods=["GET", "POST"])
@@ -84,7 +91,8 @@ def new_thread(section_id):
 
 @app.route("/thread/<int:thread_id>")
 def show_thread(thread_id):
-    #TODO:näytä viestien tiedot?
+    #TODO:näytä viestien tiedot:
+    #alueen ketjujen ja viestien määrä ja viimeksi lähetetyn viestin ajankohdan
     return render_template("messages.html", thread_id=thread_id, title=threads.get_heading(thread_id), messages=messages.get_all_messages(thread_id))
 
 @app.route("/edit_thread/<int:thread_id>", methods=["GET", "POST"])
@@ -102,6 +110,7 @@ def edit_thread(thread_id):
 @app.route("/remove_thread/<int:thread_id>", methods=["GET", "POST"])
 def remove_thread(thread_id):
     user_id = users.user_id()
+    #Tarvitseeko tähän csrf-tarkastuksen?
     #users.check_csrf_token(request)
     threads.remove_thread(thread_id, user_id)
     return redirect("/")
@@ -121,8 +130,6 @@ def new_message(thread_id):
 @app.route("/remove_message/<int:message_id>", methods=["GET", "POST"])
 def remove_message(message_id):
     user_id = users.user_id()
-    #TODO: csrf-check?
-    #users.check_csrf_token(request)
     messages.remove_message(message_id, user_id)
     return redirect("/")
 
@@ -138,5 +145,13 @@ def edit_message(message_id):
     users.check_csrf_token(request)
     messages.edit_message(message_id, user_id, content)
     return redirect("/")
+
+@app.route("/result", methods=["GET", "POST"])
+def result():
+    query = request.form["query"]
+    #Tarvitseeko tähän csrf-tarkastuksen?
+    #users.check_csrf_token(request)
+    return render_template("result.html", messages=messages.search(query))
+
 
 
