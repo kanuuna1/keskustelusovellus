@@ -1,0 +1,13 @@
+{% for message in messages %}
+<li>{{ message.content }}
+{% endfor %}
+<hr>
+{% if session.username %}
+<p>Olet kirjautunut sisään nimellä <b>{{ session.username }}</b></p>
+<hr>
+<a href="/logout">Kirjaudu ulos</a>
+{% else %}
+<a href="/login">Kirjaudu sisään</a>
+{% endif %}
+<p>
+<a href="/">Palaa etusivulle</a>
