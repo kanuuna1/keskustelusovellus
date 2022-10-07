@@ -12,15 +12,17 @@ Tähän mennessä toteutettuja ominaisuuksia:
 * Käyttäjä voi luoda alueelle uuden ketjun antamalla ketjun otsikon.
 * Käyttäjä voi kirjoittaa uuden viestin olemassa olevaan ketjuun.
 * Ylläpitäjä voi lisätä ja poistaa keskustelualueita.
+* Käyttäjä näkee sovelluksen etusivulla listan alueista sekä jokaisen alueen ketjujen ja viestien määrän ja viimeksi lähetetyn viestin ajankohdan. *Tähän vielä tyhjien ketjujen käsittely ja pvm muotoilu*
+* Käyttäjä voi muokata luomansa ketjun otsikkoa sekä lähettämänsä viestin sisältöä. Käyttäjä voi myös poistaa ketjun tai viestin.
+* Käyttäjä voi etsiä kaikki viestit, joiden osana on annettu sana. *Tähän vielä lisätietoa viesteistä / linkki ketjuun tms.?*
+* Ylläpitäjä voi lisätä ja poistaa keskustelualueita.
+
 
 Suunniteltuja ominaisuuksia:
-* Käyttäjä näkee sovelluksen etusivulla listan alueista sekä jokaisen alueen ketjujen ja viestien määrän ja viimeksi lähetetyn viestin ajankohdan.
-* Käyttäjä voi luoda alueelle uuden ketjun antamalla ketjun otsikon ja aloitusviestin sisällön.
-* Käyttäjä voi kirjoittaa uuden viestin olemassa olevaan ketjuun.
-* Käyttäjä voi muokata luomansa ketjun otsikkoa sekä lähettämänsä viestin sisältöä. Käyttäjä voi myös poistaa ketjun tai viestin.
-* Käyttäjä voi etsiä kaikki viestit, joiden osana on annettu sana.
-* Ylläpitäjä voi lisätä ja poistaa keskustelualueita.
+
+* Käyttäjä voi luoda alueelle uuden ketjun  ~~antamalla ketjun otsikon ja ~~ aloitusviestin sisällön.
 * Ylläpitäjä voi luoda salaisen alueen ja määrittää, keillä käyttäjillä on pääsy alueelle.
-* CSRF-haavoittuvuuden estäminen
-* Ulkoasun muotoilu
+* Ulkoasun muotoilu.
+* Etusivulle tyhjien ketjujen näyttämiseen "Ei viestejä" -teksti tms. ja päivämäärien muotoilu.
+
 
