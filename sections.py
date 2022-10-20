@@ -21,4 +21,5 @@ def remove_section(id):
     sql = "UPDATE sections SET visible=FALSE WHERE id=:id"
     db.session.execute(sql, {"id":id})
     db.session.commit()
-   
+
+

@@ -10,6 +10,9 @@ def new_message(content, user_id, thread_id):
     sql = "INSERT INTO messages (content, sent_at, user_id, thread_id, visible) VALUES (:content, NOW(), :user_id, :thread_id, TRUE) RETURNING id"
     message_id = db.session.execute(sql, {"content":content, "thread_id":thread_id, "user_id":user_id}).fetchone()[0]
     db.session.commit()
+    sql2 = "INSERT INTO thread_users (thread_id, user_id) VALUES (:thread_id, :user_id)"
+    db.session.execute(sql2, {"thread_id":thread_id, "user_id":user_id})
+    db.session.commit()
     return message_id
 
 def remove_message(id, user_id):
