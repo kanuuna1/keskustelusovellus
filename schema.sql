@@ -33,3 +33,9 @@ CREATE TABLE messages (
     visible BOOLEAN
 );
 
+CREATE TABLE thread_users (
+    id SERIAL PRIMARY KEY,
+    thread_id INTEGER REFERENCES threads,
+    user_id INTEGER REFERENCES users,
+);
+
