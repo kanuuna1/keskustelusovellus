@@ -1,3 +1,6 @@
+{% extends "layout.html" %}
+{% block content %}
+
 {% if session.user_id %}
 <form action="/new_section" method="post">
     Alueen nimi: <input type="text" name="topic" minlength="1" maxlength="40">
@@ -10,3 +13,5 @@
 {% endif %}
 <p>
 <a href="/">Palaa etusivulle</a>
+
+{% endblock %}

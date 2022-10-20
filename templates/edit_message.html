@@ -1,3 +1,6 @@
+{% extends "layout.html" %}
+{% block content %}
+
 <h2>Muokkaa viestiä</h2>
 {% if session.user_id == message_user_id or session.is_admin %}
 <form action="/edit_message/{{ message_id }}" method="post">
@@ -13,3 +16,5 @@ Viesti: <br>
 {% endif %}
 <p>
 <a href="/">Palaa etusivulle</a>
+
+{% endblock %}

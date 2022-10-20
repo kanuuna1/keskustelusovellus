@@ -1,3 +1,6 @@
+{% extends "layout.html" %}
+{% block content %}
+
 {% for message in messages %}
 <li>{{ message.content }}
 {% endfor %}
@@ -11,3 +14,4 @@
 {% endif %}
 <p>
 <a href="/">Palaa etusivulle</a>
+{% endblock %}

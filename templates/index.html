@@ -1,8 +1,8 @@
-<title>Etusivu</title>
-<h1>Keskustelusovellus</h1>
-<p>Tervetuloa!</p>
+{% extends "layout.html" %}
+{% block content %}
 
-Keskustelualueet:
+<h2>Etusivu</h2>
+<p>Keskustelualueet:</p>
 <hr>
 
 {% for section in sections %}
@@ -38,3 +38,5 @@ Etsi viestejä:
 <input type="submit" value="Etsi">
 
 </form>
+
+{% endblock %}

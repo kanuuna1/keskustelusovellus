@@ -1,4 +1,7 @@
-<h1>Alue: {{ topic }}</h1>
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>Alue: {{ topic }}</h2>
 <hr>
 {% for thread in threads %}
 <li><a href="/thread/{{ thread.id }}">{{ thread.heading }}</a> |
@@ -18,3 +21,4 @@
 {% endif %}
 <p>
 <a href="/">Palaa etusivulle</a>
+{% endblock %}

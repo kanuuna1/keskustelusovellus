@@ -1,3 +1,6 @@
+{% extends "layout.html" %}
+{% block content %}
+
 {% if session.user_id %}
 Luo uusi ketju
 <hr>
@@ -12,3 +15,5 @@ Luo uusi ketju
 {% endif %}
 <p>
 <a href="/">Palaa etusivulle</a>
+
+{% endblock %}

@@ -1,3 +1,6 @@
+{% extends "layout.html" %}
+{% block content %}
+
 <h2>Muokkaa ketjun otsikkoa</h2>
 {% if session.user_id == thread_user_id or session.is_admin %}
 <form action="/edit_thread/{{ thread_id }}" method="post">
@@ -11,3 +14,5 @@ Otsikko: <input type="text" name="heading" minlength="1" maxlength="40">
 {% endif %}
 <p>
 <a href="/">Palaa etusivulle</a>
+
+{% endblock %}
