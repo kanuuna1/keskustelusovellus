@@ -36,9 +36,11 @@ def register():
             return render_template("error.html", message="Tunnuksessa tulee olla 1-20 merkkiä")
         password1 = request.form["password1"]
         password2 = request.form["password2"]
+        if len(password1) < 1 or len(password1) > 20:
+            return render_template("error.html", message="Salasanassa tulee olla 1-20 merkkiä")
         role = request.form["user_role"]
         if password1 != password2:
-            return "eri salasanat"
+            return render_template("error.html", message="Salasanat eivät täsmää")
         password = password1
         hash_value = generate_password_hash(password)
         if users.register(username, password, role):
@@ -153,5 +155,7 @@ def result():
     #users.check_csrf_token(request)
     return render_template("result.html", messages=messages.search(query))
 
-
-
+@app.route("/show_users/<int:thread_id>", methods=["GET", "POST"])
+def show_users(thread_id):
+    users = threads.show_users(thread_id)
+    return render_template("show_users.html", users=threads.show_users(thread_id))

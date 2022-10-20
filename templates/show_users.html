@@ -1,0 +1,17 @@
+{% extends "layout.html" %}
+{% block content %}
+
+<h2>Ketjun kirjoittajat:</h2>
+<hr>
+{% for user in users %}
+<li>{{ user.username }}</li>
+{% endfor %}
+{% if session.username %}
+<p>Olet kirjautunut sisään nimellä <b>{{ session.username }}</b></p>
+<a href="/logout">Kirjaudu ulos</a>
+{% else %}
+<a href="/login">Kirjaudu sisään</a>
+{% endif %}
+<p>
+<a href="/">Palaa etusivulle</a>
+{% endblock %}

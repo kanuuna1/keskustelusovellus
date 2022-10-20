@@ -7,7 +7,8 @@
 <li><a href="/thread/{{ thread.id }}">{{ thread.heading }}</a> |
 {% if thread.user_id == session.user_id or session.is_admin %}
 <a href="/edit_thread/{{ thread.id }}">Muokkaa ketjun otsikkoa</a> |
-<a href="/remove_thread/{{ thread.id }}">Poista ketju</a>
+<a href="/remove_thread/{{ thread.id }}">Poista ketju</a> |
+<a href="/show_users/{{ thread.id }}">Näytä ketjun käyttäjät</a>
 {% endif %}
 {% endfor %}
 <hr>

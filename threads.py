@@ -36,3 +36,10 @@ def edit_thread(id, heading):
     sql = "UPDATE threads SET heading=:heading WHERE id=:id"
     db.session.execute(sql, {"id":id, "heading":heading})
     db.session.commit()
+
+def show_users(id):
+    sql = "SELECT DISTINCT U.username FROM users U, thread_users T WHERE T.thread_id=:id AND U.id=T.user_id"
+    result = db.session.execute(sql, {"id":id}).fetchall()
+    db.session.commit()
+    return result
+    

@@ -44,3 +44,7 @@ def is_admin():
 def check_csrf_token(request):
     if session["csrf_token"] != request.form["csrf_token"]:
         abort(403)
+
+def get_id_by_name(username):
+    sql = "SELECT id FROM users WHERE username=:username"
+    return db.session.execute(sql, {"username":username}).fetchone()[0]
