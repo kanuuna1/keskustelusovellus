@@ -1,8 +1,3 @@
-DROP TABLE IF EXIST users CASCADE;
-DROP TABLE IF EXIST sections CASCADE;
-DROP TABLE IF EXIST threads CASCADE;
-DROP TABLE IF EXIST messages CASCADE;
-
 CREATE TABLE users (
     id SERIAL PRIMARY KEY,
     username TEXT UNIQUE,
@@ -36,6 +31,6 @@ CREATE TABLE messages (
 CREATE TABLE thread_users (
     id SERIAL PRIMARY KEY,
     thread_id INTEGER REFERENCES threads,
-    user_id INTEGER REFERENCES users,
+    user_id INTEGER REFERENCES users
 );
 
